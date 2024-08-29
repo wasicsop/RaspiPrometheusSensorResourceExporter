@@ -1,0 +1,78 @@
+{
+   "current_metric": {
+      "metric_name": "current_in_ampere",
+      "metric_description": "measured current value from the sensor deployed on the power cable"
+   },
+   "power_metric": {
+      "metric_name": "power_in_watt",
+      "metric_description": "measured power value from the sensor deployed on the power cable"
+   },
+   "voltage_metric": {
+      "metric_name": "voltage_in_volt",
+      "metric_description": "measured voltage value from the sensor deployed on the socket"
+   },
+   "metric_tags": {
+      "rasPi": "EMON-R8",
+      "microController": "Master-RPICTV7v5.7",
+      "sensorName": "",
+      "portNo": ""
+   },
+   "portMapper": {
+      "0": {"name": "number0", "description": "number0"},
+      "1": {"name": "CT1P", "description": "<OVS1>"},
+      "2": {"name": "CT2P", "description": "<OVS2>"},
+      "3": {"name": "CT3P", "description": "<OVS3>"},
+      "4": {"name": "CT4P", "description": "<OVS4>"},
+      "5": {"name": "CT5P", "description": "<OVS5>"},
+      "6": {"name": "CT6P", "description": "<COMUTE-1>"},
+      "7": {"name": "CT7P", "description": "<OPT1>"},
+      "8": {"name": "CT8P", "description": "<VOA1.1>"},
+      "9": {"name": "CT9P", "description": "<VOA2.1>"},
+      "10": {"name": "CT10P", "description": "<VOA1.2>"},
+      "11": {"name": "CT11P", "description": "<VOA2.2>"},
+      "12": {"name": "CT12P", "description": "<location of deployed sensor>"},
+      "13": {"name": "CT13P", "description": "<location of deployed sensor>"},
+      "14": {"name": "CT14P", "description": "<location of deployed sensor>"},
+      "15": {"name": "CT15P", "description": "<location of deployed sensor>"},
+      "16": {"name": "CT1A", "description": "<OVS1>"},
+      "17": {"name": "CT2A", "description": "<OVS2>"},
+      "18": {"name": "CT3A", "description": "<OVS3>"},
+      "19": {"name": "CT4A", "description": "<OVS4>"},
+      "20": {"name": "CT5A", "description": "<OVS5>"},
+      "21": {"name": "CT6A", "description": "<COMUTE-1>"},
+      "22": {"name": "CT7A", "description": "<OPT1>"},
+      "23": {"name": "CT8A", "description": "<VOA1.1>"},
+      "24": {"name": "CT9A", "description": "<VOA2.1>"},
+      "25": {"name": "CT10A", "description": "<VOA1.2>"},
+      "26": {"name": "CT11A", "description": "VOA2.2>"},
+      "27": {"name": "CT12A", "description": "<location of deployed sensor>"},
+      "28": {"name": "CT13A", "description": "<location of deployed sensor>"},
+      "29": {"name": "CT14A", "description": "<location of deployed sensor>"},
+      "30": {"name": "CT115A", "description": "<location of deployed sensor>"},
+      "31": {"name": "Voltage", "description": "Electric-Socket"}
+  },
+   "activePort": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26
+   ]
+}
