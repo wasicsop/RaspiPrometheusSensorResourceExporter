@@ -116,7 +116,7 @@ Reconnect via SSH once the system is up.
 ```
 ---
 
-## Updating RPICT Configurations via Web Interface
+# Step 6: Updating RPICT Configurations via Web Interface
 1. Start the web server:
    ```bash
    lcl-server.sh
@@ -127,7 +127,7 @@ Reconnect via SSH once the system is up.
 
 ---
 
-## Updating the Arduino Sketch on RPICT
+# Step 7:Updating the Arduino Sketch on RPICT
 1. Check the current firmware version:
    ```bash
    lcl-show-header.py
