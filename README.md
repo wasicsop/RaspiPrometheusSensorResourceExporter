@@ -1,0 +1,223 @@
+# Step 1: INSTALL DEBIAN BULLSEYE
+Other distributions often do not work.
+- Download the image from the [Raspberry Pi website](https://www.raspberrypi.org/software/operating-systems/).
+- Alternatively, use the [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
+
+# Step 2: VLAN Configuration
+## Enable VLAN Support
+```bash
+modprobe 8021q
+echo 8021 >> /etc/modules
+```
+Restart the networking services to apply the changes:
+```bash
+sudo systemctl restart dhcpcd
+sudo systemctl restart networking
+```
+
+## Example Configuration To connect to the Lab Vlan
+### `/etc/dhcpcd.conf`:
+```plaintext
+interface eth0.204
+static ip_address=10.1.6.XXX/24
+static routers=10.1.6.1
+static domain_name_servers=8.8.8.8
+```
+
+#### `/etc/network/interfaces`:
+```plaintext
+auto eth0.204
+iface eth0.204 inet manual
+vlan-raw-device eth0
+```
+
+# Step 3: Steps to Set Up Raspberry Pi OS
+
+#### Headless Setup (optional):
+- If using 'Raspberry Pi OS Lite', connect a keyboard and monitor for the first boot.
+- Create an empty `ssh` file inside the `/boot` directory to enable SSH access.
+- Alternatively, configure SSH and user credentials using the Raspberry Pi Imager before flashing.
+
+## Open a Terminal
+- On the desktop version, open a terminal window.
+- On the headless version, connect via SSH with your configured user and password.
+
+## Configure Serial Port
+Run the `raspi-config` tool:
+```bash
+sudo raspi-config
+```
+- **Disable login shell over serial:**
+  - Navigate to `Interface Options > Serial Port`.
+  - Select `No` when asked if you want the login shell accessible over serial.
+  - Select `Yes` to enable the serial port hardware.
+  - Confirm and return to the main menu.
+- Exit and select **No** when prompted to reboot.
+
+## Disable Bluetooth (Optional)
+Edit the `/boot/config.txt` file:
+```bash
+sudo nano /boot/config.txt
+```
+Add the following line at the end:
+```plaintext
+dtoverlay=disable-bt
+```
+For Raspberry Pi 5, also add:
+```plaintext
+dtoverlay=uart0
+```
+Save and exit. *(Note: If Bluetooth is required, skip this step and use `ttyS0` instead of `ttyAMA0`.)*
+
+## Disable `hciuart` (Optional)
+```bash
+sudo systemctl disable hciuart
+```
+
+## Reboot
+Reboot the system:
+```bash
+sudo reboot
+```
+Reconnect via SSH once the system is up.
+
+---
+
+# Step 4: Testing the Serial Port
+**DO NOT SKIP THIS TEST.**
+1. Insert the RPICT board.
+2. Configure and read from the serial port:
+   ```bash
+   stty -echo -F /dev/ttyAMA0 raw speed 38400
+   cat /dev/ttyAMA0
+   ```
+3. Alternatively, use:
+   ```bash
+   lcl-run
+   ```
+   Example output will display on the terminal.
+
+---
+
+# Step 5: Install Python and Utilities
+1. Install `python3-serial`:
+   ```bash
+   sudo apt-get install python3-serial
+   ```
+2. Download and install the RPICT package:
+   ```bash
+   wget lechacal.com/RPICT/tools/lcl-rpict-package_latest.deb
+   sudo dpkg -i lcl-rpict-package_latest.deb
+   ```
+
+3. Install Prometheus-client for later 
+```bash
+ pip install prometheus-client
+```
+---
+
+## Updating RPICT Configurations via Web Interface
+1. Start the web server:
+   ```bash
+   lcl-server.sh
+   ```
+2. Access the interface at:
+   [http://raspberrypi:8000](http://raspberrypi:8000)
+3. Load, modify, and send configurations as needed.
+
+---
+
+## Updating the Arduino Sketch on RPICT
+1. Check the current firmware version:
+   ```bash
+   lcl-show-header.py
+   ```
+2. Download the latest Arduino sketch:
+   ```bash
+   wget lechacal.com/RPICT/sketch/RPICT_MCP3208_v4.2.0.ino.hex
+   ```
+3. Install `avrdude`:
+   ```bash
+   sudo apt-get -y install avrdude
+   ```
+4. Upload the sketch:
+   ```bash
+   lcl-upload-sketch.sh RPICT_MCP3208_v4.2.0.ino.hex
+   ```
+5. Verify the installation:
+   ```bash
+   lcl-show-header.py
+   ```
+
+---
+
+## Configuring a Static IP Address
+1. Edit the network interface:
+   ```plaintext
+   enable
+   configure terminal
+   interface ce1
+   ip address 192.168.10.1 255.255.255.0
+   description "add information here"
+   no shutdown
+   write memory
+   commit
+   exit
+   ```
+2. Verify the static route:
+   ```bash
+   show ip route
+   ```
+
+---
+
+## Energy Monitoring Using SNMP Exporter
+1. Download and configure the SNMP exporter:
+   ```bash
+   wget https://github.com/prometheus/snmp_exporter/releases/latest
+   sudo mkdir /etc/snmp_exporter
+   sudo cp <downloaded_files> /etc/snmp_exporter/
+   ```
+2. Create the `snmp-exporter.service` file:
+   ```plaintext
+   [Unit]
+   Description=SNMP Exporter
+   Wants=network-online.target
+   After=network-online.target
+
+   [Service]
+   ExecStart=/etc/snmp_exporter/snmp_exporter --config.file=/etc/snmp_exporter/snmp.yml
+   Restart=always
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+3. Start the service:
+   ```bash
+   sudo systemctl start snmp-exporter.service
+   sudo systemctl status snmp-exporter.service
+   ```
+
+4. Configure Prometheus to collect metrics:
+   ```plaintext
+   - job_name: '<job_name>'
+     static_configs:
+       - targets:
+         - 10.1.1.86
+         - 10.1.1.87
+     metrics_path: /snmp
+     params:
+       module: [if_mib]
+     relabel_configs:
+       - source_labels: [__address__]
+         target_label: __param_target
+       - source_labels: [__param_target]
+         target_label: instance
+       - target_label: __address__
+         replacement: 10.1.1.88:9116
+   ```
+5. Restart Prometheus:
+   ```bash
+   sudo systemctl restart prometheus.service
+   ```
+``` 
