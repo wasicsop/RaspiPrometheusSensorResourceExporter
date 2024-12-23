@@ -124,7 +124,15 @@ Reconnect via SSH once the system is up.
 2. Access the interface at:
    [http://raspberrypi:8000](http://raspberrypi:8000)
 3. Load, modify, and send configurations as needed.
-
+- Click on the button with the 'upload' icon, which has a hover tip saying "Load from Device."
+This action will load all the current configurations from the device to the web interface.
+4. Modify Configurations:
+- Adjust the necessary configurations, such as changing the "number of slaves" or "output fields."
+5. Send Configuration to the Device:
+- Click on the button with the 'download' icon, which has a hover tip saying "Send to Device."
+This action will push all the updated configurations from the web interface to your device.
+6. Start Collecting Metrics:
+- Click the "Start" button to begin collecting metrics based on the new configurations.
 ---
 
 # Step 7:Updating the Arduino Sketch on RPICT
