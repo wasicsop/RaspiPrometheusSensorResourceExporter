@@ -54,7 +54,7 @@ sudo raspi-config
   - Confirm and return to the main menu.
 - Exit and select **No** when prompted to reboot.
 
-## Disable Bluetooth (Optional)
+## Disable Bluetooth
 Edit the `/boot/config.txt` file:
 ```bash
 sudo nano /boot/config.txt
@@ -82,24 +82,7 @@ sudo reboot
 Reconnect via SSH once the system is up.
 
 ---
-
-# Step 4: Testing the Serial Port
-**DO NOT SKIP THIS TEST.**
-1. Insert the RPICT board.
-2. Configure and read from the serial port:
-   ```bash
-   stty -echo -F /dev/ttyAMA0 raw speed 38400
-   cat /dev/ttyAMA0
-   ```
-3. Alternatively, use:
-   ```bash
-   lcl-run
-   ```
-   Example output will display on the terminal.
-
----
-
-# Step 5: Install Python and Utilities
+# Step 4: Install Python and Utilities
 1. Install `python3-serial`:
    ```bash
    sudo apt-get install python3-serial
@@ -114,6 +97,22 @@ Reconnect via SSH once the system is up.
 ```bash
  pip install prometheus-client
 ```
+---
+
+# Step 5: Testing the Serial Port
+**DO NOT SKIP THIS TEST.**
+1. Insert the RPICT board.
+2. Configure and read from the serial port:
+   ```bash
+   stty -echo -F /dev/ttyAMA0 raw speed 38400
+   cat /dev/ttyAMA0
+   ```
+3. Alternatively, use:
+   ```bash
+   lcl-run
+   ```
+   Example output will display on the terminal.
+
 ---
 
 # Step 6: Updating RPICT Configurations via Web Interface
