@@ -2,6 +2,11 @@
 Other distributions often do not work.
 - Download the image from the [Raspberry Pi website](https://www.raspberrypi.org/software/operating-systems/).
 - Alternatively, use the [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
+#### Headless Setup (optional):
+- If using 'Raspberry Pi OS Lite', connect a keyboard and monitor for the first boot.
+- Create an empty `ssh` file inside the `/boot` directory to enable SSH access.
+- Alternatively, configure SSH and user credentials using the Raspberry Pi Imager before flashing.
+
 
 # Step 2: VLAN Configuration
 ## Enable VLAN Support
@@ -32,11 +37,6 @@ vlan-raw-device eth0
 ```
 
 # Step 3: Steps to Set Up Raspberry Pi OS
-
-#### Headless Setup (optional):
-- If using 'Raspberry Pi OS Lite', connect a keyboard and monitor for the first boot.
-- Create an empty `ssh` file inside the `/boot` directory to enable SSH access.
-- Alternatively, configure SSH and user credentials using the Raspberry Pi Imager before flashing.
 
 ## Open a Terminal
 - On the desktop version, open a terminal window.
