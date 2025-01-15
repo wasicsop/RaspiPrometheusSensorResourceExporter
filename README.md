@@ -152,10 +152,10 @@ This action will push all the updated configurations from the web interface to y
    lcl-upload-sketch.sh RPICT_MCP3208_v4.2.0.ino.hex
    ```
    Last two lines of the output should look like this.
-   ```bash
+   
 avrdude done.  Thank you.
 strace: |autoreset: Tubería rota
-   ```
+   
 6. Verify the installation:
    ```bash
    lcl-show-header.py
