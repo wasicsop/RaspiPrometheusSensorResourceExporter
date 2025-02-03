@@ -50,9 +50,16 @@ sudo raspi-config
 - **Disable login shell over serial:**
   - Navigate to `Interface Options > Serial Port`.
   - Select `No` when asked if you want the login shell accessible over serial.
+    
+  ![001_login_shell_question](https://github.com/user-attachments/assets/9c55a7ac-a641-4872-8f53-37b1adadc124)
+
   - Select `Yes` to enable the serial port hardware.
+    
+  ![002_serial_enable](https://github.com/user-attachments/assets/e4297412-907c-4d4c-916c-0def398a703f)
+
   - Confirm and return to the main menu.
 - Exit and select **No** when prompted to reboot.
+
 
 ## Disable Bluetooth
 Edit the `/boot/config.txt` file:
