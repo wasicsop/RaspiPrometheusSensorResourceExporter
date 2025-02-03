@@ -119,6 +119,9 @@ Reconnect via SSH once the system is up.
    lcl-run
    ```
    Example output will display on the terminal.
+   
+![Screenshot_2021-03-12_21-27-04](https://github.com/user-attachments/assets/a23e7692-affb-417e-8bbc-9c7d39a24c10)
+
 
 ---
 
