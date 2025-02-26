@@ -30,7 +30,7 @@
       "9": {"name": "CT9P", "description": "<VOA2.1>"},
       "10": {"name": "CT10P", "description": "<VOA1.2>"},
       "11": {"name": "CT11P", "description": "<VOA2.2>"},
-      "12": {"name": "CT12P", "description": "<location of deployed sensor>"},
+      "12": {"name": "CT12P", "description": "<Free>"},
       "13": {"name": "CT13P", "description": "<location of deployed sensor>"},
       "14": {"name": "CT14P", "description": "<location of deployed sensor>"},
       "15": {"name": "CT15P", "description": "<location of deployed sensor>"},
