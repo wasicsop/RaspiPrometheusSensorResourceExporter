@@ -173,6 +173,37 @@ strace: |autoreset: Tubería rota
 
 ---
 
+# Step 8: Make the code execute on boot 
+
+Add a new .service file on the /system/ folder with: 
+sudo nano /etc/systemd/system/EMON-client.service
+
+Remember to also include the correct path to the .py code in ExecStart= and the WorkingDirectory= (where the json file is alocated) otherwise it won't load the directory and kill the process if JSON not load.
+
+```bash
+[Unit]
+Description=Python Boot Script to start brodcasting EMON metrics to the server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/cttc/Documentos/SensorResourceExporter/pythonCode.py
+WorkingDirectory=/home/cttc/Documentos/SensorResourceExporter/
+StandardOutput=journal
+StandardError=journal
+Restart=always
+User=cttc
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target
+```
+
+commit and check the service
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart EMON-client.service
+sudo systemctl status EMON-client.service
+```
 ## Configuring a Static IP Address
 1. Edit the network interface:
    ```plaintext
