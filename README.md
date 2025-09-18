@@ -206,11 +206,19 @@ Environment="PYTHONUNBUFFERED=1"
 WantedBy=multi-user.target
 ```
 
-commit and check the service
+enable commit and check the service
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl restart EMON-client.service
+sudo systemctl start EMON-client.service
+sudo systemctl enable EMON-client.service
+```
+```bash
 sudo systemctl status EMON-client.service
+```
+
+to restart the service
+```bash
+sudo systemctl restart EMON-client.service
 ```
 ## Configuring a Static IP Address
 1. Edit the network interface:
