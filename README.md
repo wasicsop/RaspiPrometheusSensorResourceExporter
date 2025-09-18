@@ -172,8 +172,15 @@ strace: |autoreset: Tubería rota
    ```
 
 ---
+# Step:8 Cloning the repository
 
-# Step 8: Make the code execute on boot 
+To clone this repository into `/home/cttc/Documentos/`, run:
+
+```bash
+cd /home/cttc/Documentos/
+git clone https://gitlab.cttc.es/pons/energy-monitor
+```
+# Step 9: Make the code execute on boot 
 
 Add a new .service file on the /system/ folder with: 
 ```bash
