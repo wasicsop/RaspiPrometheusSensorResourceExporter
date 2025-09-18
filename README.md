@@ -176,8 +176,9 @@ strace: |autoreset: Tubería rota
 # Step 8: Make the code execute on boot 
 
 Add a new .service file on the /system/ folder with: 
+```bash
 sudo nano /etc/systemd/system/EMON-client.service
-
+```
 Remember to also include the correct path to the .py code in ExecStart= and the WorkingDirectory= (where the json file is alocated) otherwise it won't load the directory and kill the process if JSON not load.
 
 ```bash
