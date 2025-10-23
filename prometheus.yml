@@ -1,0 +1,90 @@
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+#remote_write:
+# This URL is for Mimir running in docker-compose
+#  - url: "http://10.1.1.52:9009/api/v1/push"
+#    write_relabel_configs:
+#      - source_labels: [__name__]
+#        target_label: __name__
+#        regex: "(.*)"
+#    headers:
+#      X-Scope-OrgID: demo
+
+# This URL is for Mimir running in minikube
+#  - url: "http://service.grafana/api/v1/push"
+#    write_relabel_configs:
+#      - source_labels: [__name__]
+#        target_label: __name__
+#        regex: "(.*)"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "raspiExporter"
+    # read the measured values from the raspi connected sensors
+    static_configs:
+      - targets: ["10.1.6.30:8080", "10.1.6.11:8080", "10.1.1.100:8080",
+                  "10.1.6.14:8080", "10.1.6.18:8080", "10.1.1.101:8080", 
+                  "10.1.6.31:8080", "10.1.6.12:8080", "10.1.6.13:8080"]
+
+  - job_name: "Schaphandre-Exporter"
+    # read the measured values from scaphandre exporter
+    static_configs:
+      - targets: [ "10.1.1.88:8888", "10.1.1.89:8091" ]
+
+
+  - job_name: 'snmp-DC7'
+    static_configs:
+      - targets:
+        - 10.1.1.86     # CSGW address
+        - 10.1.1.87
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.1.1.88:9116  # The SNMP exporter's real hostname:port.
+ 
+  - job_name: 'snmp-eMon-Server-1'
+    static_configs:
+      - targets:
+        - 10.1.1.86     # CSGW-1 address
+        - 10.1.1.87     # CSGW-2 address
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.1.1.52:9116  # The SNMP exporter's real hostname:port.
+
