@@ -18,7 +18,7 @@ rule_files:
 
 #remote_write:
 # This URL is for Mimir running in docker-compose
-#  - url: "http://10.1.1.52:9009/api/v1/push"
+#  - url: "http://10.1.1.XX:9009/api/v1/push"
 #    write_relabel_configs:
 #      - source_labels: [__name__]
 #        target_label: __name__
@@ -46,21 +46,21 @@ scrape_configs:
   - job_name: "raspiExporter"
     # read the measured values from the raspi connected sensors
     static_configs:
-      - targets: ["10.1.6.30:8080", "10.1.6.11:8080", "10.1.1.100:8080",
-                  "10.1.6.14:8080", "10.1.6.18:8080", "10.1.1.101:8080", 
-                  "10.1.6.31:8080", "10.1.6.12:8080", "10.1.6.13:8080"]
+      - targets: ["10.1.6.XX:8080", "10.1.6.XX:8080", "10.1.1.XX:8080",
+                  "10.1.6.XX:8080", "10.1.6.XX:8080", "10.1.1.XX:8080", 
+                  "10.1.6.XX:8080", "10.1.6.XX:8080", "10.1.6.XX:8080"]
 
   - job_name: "Schaphandre-Exporter"
     # read the measured values from scaphandre exporter
     static_configs:
-      - targets: [ "10.1.1.88:8888", "10.1.1.89:8091" ]
+      - targets: [ "10.1.1.XX:8888", "10.1.1.XX:8091" ]
 
 
   - job_name: 'snmp-DC7'
     static_configs:
       - targets:
-        - 10.1.1.86     # CSGW address
-        - 10.1.1.87
+        - 10.1.1.XX     # CSGW address
+        - 10.1.1.XX
     metrics_path: /snmp
     params:
       module: [if_mib]
@@ -75,8 +75,8 @@ scrape_configs:
   - job_name: 'snmp-eMon-Server-1'
     static_configs:
       - targets:
-        - 10.1.1.86     # CSGW-1 address
-        - 10.1.1.87     # CSGW-2 address
+        - 10.1.1.XX     # CSGW-1 address
+        - 10.1.1.XX     # CSGW-2 address
     metrics_path: /snmp
     params:
       module: [if_mib]
@@ -86,5 +86,5 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 10.1.1.52:9116  # The SNMP exporter's real hostname:port.
+        replacement: 10.1.1.XX:9116  # The SNMP exporter's real hostname:port.
 
