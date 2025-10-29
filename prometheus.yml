@@ -70,7 +70,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 10.1.1.88:9116  # The SNMP exporter's real hostname:port.
+        replacement: 10.1.1.XX:9116  # The SNMP exporter's real hostname:port.
  
   - job_name: 'snmp-eMon-Server-1'
     static_configs:
